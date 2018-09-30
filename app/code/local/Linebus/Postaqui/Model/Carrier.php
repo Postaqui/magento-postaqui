@@ -1,5 +1,6 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 require 'HttpCarrier.php';
 
 class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface {
@@ -15,7 +16,7 @@ class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
         /* Cart Info */
         $quote = Mage::getSingleton('checkout/session')->getQuote();
         $weight = $quote->getShippingAddress()->getWeight();
-        if($_REQUEST['zip_id']) // CEP que vem da página do produto
+        if(isset($_REQUEST['zip_id']) && !empty($_REQUEST['zip_id'])) // CEP que vem da página do produto
             $zipcode = $_REQUEST['zip_id'];
         else
             $zipcode = $quote->getShippingAddress()->getPostcode();
@@ -30,9 +31,6 @@ class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
         $_SESSION['token'] = $this->getConfigData('auth');
         $_SESSION['methods_delivery_linebus'] = $post->data;
         $this->carrier->stripCarrierServices($post->data);
-        //echo '<pre>';
-        //print_r($this->carrier);
-        //die();
     }
 
     public function collectRates(

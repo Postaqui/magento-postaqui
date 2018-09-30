@@ -43,3 +43,7 @@ Integre sua loja com as principais transportadoras do mercado
 6) Insira o CEP de localização onde será feito a postagem do(s) produto(s).
 7) Insira o Token de autenticação do seu usuário no portal Postaqui. Para mais informações acesse: [link]
 8) Se preferir, altere a ordem de exibição das opções de transporte em sua loja, se não souber mantenha o padrão.
+
+## Extra
+
+Em caso de bugs ou problemas de compatibilidade, favor encaminhar um e-mail para: [email]
