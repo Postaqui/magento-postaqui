@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Linebus_Postaqui>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Shipping />
+                <Mage_Customer/>
+            </depends>
+        </Linebus_Postaqui>
+    </modules>
+</config>
