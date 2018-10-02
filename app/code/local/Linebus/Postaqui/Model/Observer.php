@@ -36,11 +36,12 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
             );
         }
 
+        $total_produtos = $order->getGrandTotal() - $order->getShippingAmount();
         $post = $this->carrier->post(
                 array("_id" => $method->_id,
                     "conteudo" => 'Postaqui - Magento plugin',
                     "peso_total" => $order->getWeight(),
-                    "valor_total" => $order->getGrandTotal(),
+                    "valor_total" => $total_produtos,
                     "tipo_envio" => $method->type_send,
                     "origem" => 'magento-postaqui',
                     "email" => $customerData->getEmail(),

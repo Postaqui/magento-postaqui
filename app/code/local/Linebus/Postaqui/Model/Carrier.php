@@ -22,9 +22,17 @@ class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
             $zipcode = $quote->getShippingAddress()->getPostcode();
         /* // */
 
+        /* Preço dos produtos */
+        $items = $quote->getAllVisibleItems();
+        $preco_produto = 0;
+        foreach ($items as $item) {
+            $preco_produto = $item->getPrice(); // 150$ - price excluding tax
+        }
+
         $post = ($this->carrier->post(array("cepOrigem" => $this->getConfigData('ceporigem'),
             "cepDestino" => $zipcode,
             "peso" => $weight,
+            "valorDeclarado" => $preco_produto,
             "altura" => 10,
             "largura" => 10,
             "comprimento" => 10)));
