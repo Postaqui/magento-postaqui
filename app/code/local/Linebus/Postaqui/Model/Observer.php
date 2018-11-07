@@ -31,9 +31,12 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
         $itens_volume =  array();
         foreach ($order->getAllItems() as $item) {
-            $itens_volume[] = array(
-                'peso'            => $item->getWeight()
-            );
+            $qty = (int)$item->getQtyOrdered();
+            for ($c = 1; $c <= $qty; $c++){
+                $itens_volume[] = array(
+                    'peso'            => $item->getWeight()
+                );
+            }
         }
 
         $total_produtos = $order->getGrandTotal() - $order->getShippingAmount();
