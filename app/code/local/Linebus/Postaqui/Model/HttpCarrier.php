@@ -24,6 +24,13 @@ class HttpCarrier{
 			);
 
 	    $response = json_decode(curl_exec($curl));
+
+//        if (curl_exec($curl) === false){
+//            $response = curl_error($curl);
+//            $info = curl_getinfo($curl);
+//            echo '<pre>'; print_r($response); print_r($info); die();
+//        }
+
 	    curl_close($curl);
 
 	    return $response;
