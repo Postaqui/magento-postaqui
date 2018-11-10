@@ -51,8 +51,8 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
             $post = $this->carrier->post(
                 array("_id" => $method->_id,
                     "conteudo" => $order_name,
-                    "peso_total" => $order->getWeight(),
-                    "valor_total" => $total_produtos,
+                    "peso_total" => (float)$order->getWeight(),
+                    "valor_total" => (float)$total_produtos,
                     "tipo_envio" => $method->type_send,
                     "origem" => 'magento-postaqui',
                     "email" => $customerData->getEmail(),
