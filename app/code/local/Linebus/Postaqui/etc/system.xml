@@ -30,6 +30,16 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </active>
+
+                        <ambiente translate="label">
+                            <label>Ambiente Produção</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </ambiente>
                         <!--
                             This value can be used to specify a
                             custom title for our method.
@@ -37,7 +47,7 @@
                         <title translate="label">
                             <label>Título da transportadora</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>2</sort_order>
+                            <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -55,7 +65,7 @@
                         <ceporigem translate="label">
                             <label>CEP de Origem</label>
                             <frontend_type>text</frontend_type>
-                            <sort_order>4</sort_order>
+                            <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -75,6 +85,50 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </sort_order>
+
+
+                        <postaqui_comprimento_default_title translate="label">
+                            <label>Dimensões Padrão</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </postaqui_comprimento_default_title>
+
+                        <postaqui_comprimento_default translate="label">
+                            <label>Comprimento</label>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                    Esse comprimento será usado caso algum produto não tenha um comprimento configurado no cadastro
+                                ]]>
+                            </comment>
+                        </postaqui_comprimento_default>
+                        <postaqui_altura_default translate="label">
+                            <label>Altura</label>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                    Essa altura será usado caso algum produto não tenha uma altura configurado no cadastro
+                                ]]>
+                            </comment>
+                        </postaqui_altura_default>
+                        <postaqui_largura_default translate="label">
+                            <label>Largura</label>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                    Essa largura será usado caso algum produto não tenha uma largura configurado no cadastro
+                                ]]>
+                            </comment>
+                        </postaqui_largura_default>
                         <!--
                             This value is used to specify whether
                             the carrier is available only for

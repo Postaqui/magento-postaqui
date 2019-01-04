@@ -1,4 +1,5 @@
 <?php
+/*
 $this->addAttribute('customer', 'cpf', array(
     'type'      => 'varchar',
     'label'     => 'CPF',
@@ -16,3 +17,4 @@ $attribute->setData('used_in_forms', array(
 ));
 $attribute->setData('is_user_defined', 0);
 $attribute->save();
+*/

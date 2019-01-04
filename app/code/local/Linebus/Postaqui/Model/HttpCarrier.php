@@ -14,6 +14,10 @@ class HttpCarrier{
 	}
 
 	public function post($data){
+
+	    Mage::log('------- Send Resquest Data --------');
+	    Mage::log(json_encode($data));
+
 		$curl = curl_init($this->url);
 	    curl_setopt($curl, CURLOPT_POST, true);
 	    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
@@ -25,6 +29,8 @@ class HttpCarrier{
 
 	    $response = json_decode(curl_exec($curl));
 
+        Mage::log('------- Response --------');
+        Mage::log(json_encode($response));
 //        if (curl_exec($curl) === false){
 //            $response = curl_error($curl);
 //            $info = curl_getinfo($curl);
