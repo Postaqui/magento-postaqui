@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Linebus_Postaqui>
-            <module>0.0.1</module>
+            <version>0.0.2</version>
         </Linebus_Postaqui>
     </modules>
     <global>
@@ -59,6 +59,7 @@
         <carriers>
             <linebus_postaqui>
                 <active>1</active>
+                <ambiente>0</ambiente>
                 <!--
                      This configuration should not be made visible
                      to the administrator, because it specifies
@@ -75,6 +76,9 @@
                     carriers available in checkout.
                 -->
                 <sort_order>10</sort_order>
+                <postaqui_comprimento_default>16</postaqui_comprimento_default>
+                <postaqui_altura_default>2</postaqui_altura_default>
+                <postaqui_largura_default>11</postaqui_largura_default>
                 <!--
                     Out of the box, Magento offers shipping
                     carriers the ability to restrict themselves

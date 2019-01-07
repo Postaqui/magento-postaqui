@@ -1,6 +1,6 @@
 <?php
-session_start();
-require 'HttpCarrier.php';
+//session_start();
+//require 'HttpCarrier.php';
 
 class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
@@ -9,9 +9,19 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
 
     public function __construct(){
+
+        $_url = Mage::getModel('linebus_postaqui/url')->getUrlTicket();
+
+        /*
         $this->carrier = new HttpCarrier(
-            'http://api.postaquilog.com.br:3100/tickets',
+            $_url,
             $_SESSION['token']);
+        */
+
+        $modelHttp = Mage::getModel('linebus_postaqui/http');
+        $modelHttp->setUrl($_url);
+
+        $this->carrier = $modelHttp;
     }
 
 
@@ -31,16 +41,28 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
         $itens_volume = array();
         $order_name = 'Postaqui - Magento plugin';
+
         foreach ($order->getAllItems() as $item) {
+
             if(!isset($first_item))
                 $order_name = $item->getName();
 
             $qty = (int)$item->getQtyOrdered();
-            for ($c = 1; $c <= $qty; $c++){
-                $itens_volume[] = array(
-                    'peso'            => $item->getWeight()
-                );
-            }
+
+            //carrega o produto simples
+            $_product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
+
+            //pega dimensões do produto no cadastro individual ou no default do módulo
+            $postaqui_comprimento = Mage::getModel('linebus_postaqui/product')->getComprimento($_product) * $qty;
+            $postaqui_altura = Mage::getModel('linebus_postaqui/product')->getAltura($_product) * $qty;
+            $postaqui_largura = Mage::getModel('linebus_postaqui/product')->getLargura($_product) * $qty;
+
+            $itens_volume[] = array(
+                'comprimento' => $postaqui_comprimento,
+                'altura' => $postaqui_altura,
+                'largura' => $postaqui_largura,
+                'peso'            => $item->getWeight() * $qty
+            );
 
             $first_item = false;
         }
@@ -72,10 +94,11 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
                 ));
         }
 
+        Mage::log($itens_volume);
+
         // echo '<pre>'; print_r($post); die();
 
         unset($_SESSION['methods_delivery_linebus']); unset($_SESSION['token']);
-        Mage::log($post);
 
         $_SESSION['last_order_exec'] = $order_id; // Flag de controle para executar este fluxo uma vez, mesmo o hook se repetindo
     }
