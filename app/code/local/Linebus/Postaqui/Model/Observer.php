@@ -1,6 +1,6 @@
 <?php
-session_start();
-require 'HttpCarrier.php';
+//session_start();
+//require 'HttpCarrier.php';
 
 class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
@@ -12,9 +12,16 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
         $_url = Mage::getModel('linebus_postaqui/url')->getUrlTicket();
 
+        /*
         $this->carrier = new HttpCarrier(
             $_url,
             $_SESSION['token']);
+        */
+
+        $modelHttp = Mage::getModel('linebus_postaqui/http');
+        $modelHttp->setUrl($_url);
+
+        $this->carrier = $modelHttp;
     }
 
 

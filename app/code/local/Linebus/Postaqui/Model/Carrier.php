@@ -1,7 +1,7 @@
 <?php
 if (session_status() == PHP_SESSION_NONE)
     session_start();
-require 'HttpCarrier.php';
+//require 'HttpCarrier.php';
 
 class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract implements Mage_Shipping_Model_Carrier_Interface {
 
@@ -17,9 +17,16 @@ class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
 
         $_url = Mage::getModel('linebus_postaqui/url')->getUrlCalc();
 
+        /*
         $this->carrier = new HttpCarrier(
             $_url,
             $this->getConfigData('auth'));
+        */
+
+        $modelHttp = Mage::getModel('linebus_postaqui/http');
+        $modelHttp->setUrl($_url);
+
+        $this->carrier = $modelHttp;
 
         /* Cart Info */
         $quote = Mage::getSingleton('checkout/session')->getQuote();
