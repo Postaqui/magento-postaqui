@@ -12,7 +12,7 @@
             </linebus_postaqui>
         </models>
         <events>
-            <sales_order_invoice_pay>
+            <sales_order_invoice_save_after>
                 <observers>
                     <linebus_postaqui>
                         <class>Linebus_Postaqui_Model_Observer</class>
@@ -20,7 +20,7 @@
                         <type>singleton</type>
                     </linebus_postaqui>
                 </observers>
-            </sales_order_invoice_pay>
+            </sales_order_invoice_save_after>
         </events>
         <helpers>
             <linebus_postaqui>
