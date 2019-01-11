@@ -12,7 +12,7 @@
             </linebus_postaqui>
         </models>
         <events>
-            <checkout_onepage_controller_success_action>
+            <sales_order_invoice_pay>
                 <observers>
                     <linebus_postaqui>
                         <class>Linebus_Postaqui_Model_Observer</class>
@@ -20,7 +20,7 @@
                         <type>singleton</type>
                     </linebus_postaqui>
                 </observers>
-            </checkout_onepage_controller_success_action>
+            </sales_order_invoice_pay>
         </events>
         <helpers>
             <linebus_postaqui>
