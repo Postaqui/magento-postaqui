@@ -27,7 +27,6 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
     function updateOrder($observer){
 
-        echo '<pre>'; print_r($observer);
 
         $order_id = $observer->getData('order_ids');
         $order = Mage::getModel('sales/order')->load($order_id);
@@ -71,7 +70,6 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
         if(!isset($_SESSION['last_order_exec']) || $_SESSION['last_order_exec'] != $order_id) {
 
-            echo '<pre>'; print_r('condicao OK');
 
             $total_produtos = $order->getGrandTotal() - $order->getShippingAmount();
             $post = $this->carrier->post(
@@ -100,7 +98,7 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
 
         Mage::log($itens_volume);
 
-        echo '<pre>'; print_r($post);
+        // echo '<pre>'; print_r($post);
 
         unset($_SESSION['methods_delivery_linebus']); unset($_SESSION['token']);
 
