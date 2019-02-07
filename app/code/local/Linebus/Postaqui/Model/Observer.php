@@ -2,13 +2,15 @@
 //session_start();
 //require 'HttpCarrier.php';
 
-class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
+class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer
+{
 
     protected $_code = 'linebus_postaqui';
     protected $carrier;
 
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $_url = Mage::getModel('linebus_postaqui/url')->getUrlTicket();
 
@@ -25,7 +27,8 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
     }
 
 
-    function updateOrder($observer){
+    function updateOrder($observer)
+    {
 
 
         $order_id = $observer->getData('order_ids');
@@ -43,9 +46,10 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
         $itens_volume = array();
         $order_name = 'Postaqui - Magento plugin';
 
-        foreach ($order->getAllItems() as $item) {
 
-            if(!isset($first_item))
+        foreach ($order->getAllVisibleItems() as $item) {
+
+            if (!isset($first_item))
                 $order_name = $item->getName();
 
             $qty = (int)$item->getQtyOrdered();
@@ -62,13 +66,13 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
                 'comprimento' => $postaqui_comprimento,
                 'altura' => $postaqui_altura,
                 'largura' => $postaqui_largura,
-                'peso'            => $item->getWeight() * $qty
+                'peso' => $item->getWeight() * $qty
             );
 
             $first_item = false;
         }
 
-        if(!isset($_SESSION['last_order_exec']) || $_SESSION['last_order_exec'] != $order_id) {
+        if (!isset($_SESSION['last_order_exec']) || $_SESSION['last_order_exec'] != $order_id) {
 
 
             $total_produtos = $order->getGrandTotal() - $order->getShippingAmount();
@@ -96,18 +100,21 @@ class Linebus_Postaqui_Model_Observer extends Varien_Event_Observer {
                 ));
         }
 
-        Mage::log($itens_volume);
 
-        // echo '<pre>'; print_r($post);
+//        echo '<pre>';
+//        print_r($itens_volume);
+//        die();
 
-        unset($_SESSION['methods_delivery_linebus']); unset($_SESSION['token']);
+        unset($_SESSION['methods_delivery_linebus']);
+        unset($_SESSION['token']);
 
         $_SESSION['last_order_exec'] = $order_id; // Flag de controle para executar este fluxo uma vez, mesmo o hook se repetindo
     }
 
-    function getAtualDelivery($shipping_method, $carriers){
-        foreach($carriers as $carrier){
-            if('linebus_postaqui_'.$carrier->type_send == $shipping_method) //$_code
+    function getAtualDelivery($shipping_method, $carriers)
+    {
+        foreach ($carriers as $carrier) {
+            if ('linebus_postaqui_' . $carrier->type_send == $shipping_method) //$_code
                 return $carrier;
         }
     }
