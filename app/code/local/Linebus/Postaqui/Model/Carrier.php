@@ -49,49 +49,31 @@ class Linebus_Postaqui_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
         $this->postaqui_largura = 0;
 
         foreach ($items as $item) {
-
-            //carrega o produto simples
             $_product = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-
-            $qty = (int)$item->getQty();
-
-            $preco_produto = $item->getPrice() * $qty;
-
-            $this->postaqui_valor_declarado += $preco_produto;
-
-            //pega dimensões do produto no cadastro individual ou no default do módulo
-            $postaqui_comprimento = Mage::getModel('linebus_postaqui/product')->getComprimento($_product);
-            $postaqui_altura = Mage::getModel('linebus_postaqui/product')->getAltura($_product);
-            $postaqui_largura = Mage::getModel('linebus_postaqui/product')->getLargura($_product);
-
-            Mage::log('Item: '.$_product->getSku());
-            Mage::log('Quantidade: '.$qty);
-            Mage::log('Comprimento: '.$postaqui_comprimento);
-            Mage::log('Altura: '.$postaqui_altura);
-            Mage::log('Largura: '.$postaqui_largura);
-
-            $postaqui_comprimento = $postaqui_comprimento * $qty;
-            $postaqui_altura = $postaqui_altura * $qty;
-            $postaqui_largura = $postaqui_largura * $qty;
-
-            //realiza somatório das dimensões separadas
-            $this->postaqui_comprimento = $this->postaqui_comprimento + $postaqui_comprimento;
-            $this->postaqui_altura = $this->postaqui_altura + $postaqui_altura;
-            $this->postaqui_largura = $this->postaqui_largura + $postaqui_largura;
+            $this->postaqui_valor_declarado += $item->getPrice();
+            $this->postaqui_comprimento += Mage::getModel('linebus_postaqui/product')->getComprimento($_product);
+            $this->postaqui_altura += Mage::getModel('linebus_postaqui/product')->getAltura($_product);
+            $this->postaqui_largura += Mage::getModel('linebus_postaqui/product')->getLargura($_product);
         }
 
-        Mage::log('------- Send Request Total --------');
-        Mage::log('postaqui_comprimento: '.$this->postaqui_comprimento);
-        Mage::log('postaqui_altura: '.$this->postaqui_altura);
-        Mage::log('postaqui_largura: '.$this->postaqui_largura);
 
-        $post = ($this->carrier->post(array("cepOrigem" => $this->getConfigData('ceporigem'),
+        $params = array(
+            "cepOrigem" => $this->getConfigData('ceporigem'),
             "cepDestino" => $zipcode,
             "peso" => $weight,
             "valorDeclarado" => $this->postaqui_valor_declarado,
             "altura" => $this->postaqui_altura,
             "largura" => $this->postaqui_largura,
-            "comprimento" => $this->postaqui_comprimento)));
+            "comprimento" => $this->postaqui_comprimento);
+
+        $post = ($this->carrier->post($params));
+
+
+//        echo '<pre>';
+//        print_r($params);
+//        print_r($post);
+//        die();
+
 
         $_SESSION['token'] = $this->getConfigData('auth');
         $_SESSION['methods_delivery_linebus'] = $post->data;
